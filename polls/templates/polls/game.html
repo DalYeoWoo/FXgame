@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>FXGAME</title>
+
+    <style>
+        body {padding:50px;}
+        #graph {height:40px;border-radius:40px;background:#ccc; width:500px;}
+        #graph span{
+            display:block;
+            height:40px;
+            padding: 0 10px; 
+            width:75%;
+            line-height:40px;
+            text-align: right;
+            background:pink; 
+            border-radius: 40px; 
+            box-sizing:border-box;
+            color:#fff;
+            animation:effect 0.5s 1;
+        }
+
+        @keyframes effect{
+            50% {width:50%;}
+            100% {width:75%;}
+        }
+    </style>
+
+    <script>
+        var time = 0;
+        var set = 0;
+        var rate = [0,1.1,2.2,3.3,4.4,5.5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21];
+        var hist = '';
+        var money = 100000000;
+        var choice = "NONE";
+        var answer = ["UP","DOWN","UP","DOWN","UP","DOWN","UP","DOWN","UP","DOWN"]
+
+        function startInterval() {
+            setInterval(updateTime, 1000);
+        }
+
+        startInterval();        
+
+        function updateTime() {
+            if (time ==1){
+                hist += choice+'/';
+
+                if (choice == answer[set]){ 
+                    money *= 1.3;
+                }
+                else if (choice == "NONE"){
+                    money *= 1;
+                }
+                else{
+                    money *= 0.8;
+                }
+                document.getElementById('money').innerHTML = money+"원";
+
+
+                if(set==9){
+                    clearInterval(updateTime);
+                    document.getElementById('submit').innerHTML="<form action=\"{% url 'polls:submit' participant.id %}\" method=\"post\"\"> <input type = \"submit\" value=\"설문조사 제출하기\"><input name='hist' value='"+hist+"'></form>";
+                }
+
+                set += 1;
+                time = 0;
+                choice = "NONE";
+                document.getElementById('initial_rate').innerHTML = "초기 환율: "+rate[time+(set)*20];
+                document.getElementById('history').innerHTML = hist;
+            } 
+
+            time += 1;
+            resetAnimation();
+            document.getElementById('set').innerHTML = "set "+(set+1);
+            document.getElementById('time').innerHTML = time + "초";
+            document.getElementById('rate').innerHTML = rate[time+(set)*20];
+        }
+
+        function up(){
+            if (time < 13){
+                choice = "UP";
+            }
+            else{
+                window.alert("선택지를 바꿀 수 없습니다");
+            }
+        }
+
+        function down(){
+            if (time < 13){
+                choice = "DOWN";
+            }
+            else{
+                window.alert("선택지를 바꿀 수 없습니다");
+            }
+        }
+
+        
+        function resetAnimation() {
+            const target = document.getElementById('graph');
+            target.classList.remove('effect');
+            void target.offsetWidth;
+            target.classList.add('effect');
+        }
+        
+    </script>
+
+</head>
+<body>
+<h1>GROUP: {{ participant.group}}</h1>
+{% if error_message %}
+<p>{{ error_message }}</p>
+{% endif %}
+
+<p id="set">set 1</p>
+<p id="time">0초</p>
+<p id="initial_rate">초기 환율: 1.1</p>
+<p id="rate"></p>
+<div id="graph">
+    <span >75%</span>
+</div>
+<p id="money">가진 돈: 1억원</p>
+
+
+<!--그룹 별 차이-->
+{% if participant.group == 'A' %}
+<p> 아아 당신은 운좋은 사람 </p>
+{% endif %}
+
+<!--상승/하락-->
+<input type="button" value="상승" onclick="up()"/>
+<input type="button" value="하락" onclick="down()"/>
+
+<p id="history"></p>
+
+<div id="submit"></div>
+
+</body>
+</html>

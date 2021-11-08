@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>FXGAME</title>
+</head>
+<body>
+안녕하세요 <br>
+설문에 참여하기 위해서는 아래 참여하기 버튼을 누르세요.<br>
+(대충 FX게임에 대해 설명한다.)
+<div class = "container"> 
+    <form action="{% url 'polls:participate' %}"> 
+        <input type = "submit" value="설문조사 참여하기"> 
+    </form> 
+</div>
+</body>
+</html>

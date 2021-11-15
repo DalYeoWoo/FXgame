@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>FXGAME</title>
+
+
+    <style>
+        body {padding:50px;}
+    </style>
+
+    <script> 
+    </script>
+
+</head>
+<body>
+{% if error_message %}
+<p>{{ error_message }}</p>
+{% endif %}
+<h1> 수고하셨습니다! 
+    <br>마지막으로, 자신이 해당 게임을 하면서 느낀 점,
+    <br>자신만의 베팅 팁 등을 아래에 짧게 써주시면 감사드리겠습니다!
+</h1>>
+<form action="{% url 'polls:create' participant.id %}" method="post">
+    <input name='tip' style="height: 300px; width: 700px;"><br><br>
+    <input type = "submit" value="제출하기">
+</form>
+
+</body>
+</html>

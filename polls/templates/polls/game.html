@@ -7,31 +7,13 @@
 
     <style>
         body {padding:50px;}
-        #graph {height:40px;border-radius:40px;background:#ccc; width:500px;}
-        #graph span{
-            display:block;
-            height:40px;
-            padding: 0 10px; 
-            width:75%;
-            line-height:40px;
-            text-align: right;
-            background:pink; 
-            border-radius: 40px; 
-            box-sizing:border-box;
-            color:#fff;
-            animation:effect 0.5s 1;
-        }
-
-        @keyframes effect{
-            50% {width:50%;}
-            100% {width:75%;}
-        }
+        
     </style>
 
     <script>
         var time = 0;
         var set = 0;
-        var rate = [0,1.1,2.2,3.3,4.4,5.5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21];
+        var rate = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21];
         var hist = '';
         var money = 100000000;
         var choice = "NONE";
@@ -60,7 +42,7 @@
 
 
                 if(set==9){
-                    clearInterval(updateTime);
+
                     document.getElementById('submit').innerHTML="<form action=\"{% url 'polls:submit' participant.id %}\" method=\"post\"\"> <input type = \"submit\" value=\"설문조사 제출하기\"><input name='hist' value='"+hist+"'></form>";
                 }
 
@@ -72,7 +54,7 @@
             } 
 
             time += 1;
-            resetAnimation();
+
             document.getElementById('set').innerHTML = "set "+(set+1);
             document.getElementById('time').innerHTML = time + "초";
             document.getElementById('rate').innerHTML = rate[time+(set)*20];
@@ -96,14 +78,46 @@
             }
         }
 
-        
-        function resetAnimation() {
-            const target = document.getElementById('graph');
-            target.classList.remove('effect');
-            void target.offsetWidth;
-            target.classList.add('effect');
+       
+    </script>
+
+<script>
+    window.onload = function () {
+    var dps = []; // dataPoints
+    var chart = new CanvasJS.Chart("chartContainer", {
+        title :{
+            text: "USD TO KRW Currency"
+        },
+        data: [{
+            type: "line",
+            dataPoints: dps
+        }]
+    });
+    var xVal = 0;
+    var xSet=0;
+    var yflow = [0,1,2,3,4,5,6,7,8,9,10];
+    var yVal = yflow[0]; 
+    var updateInterval = 1000;
+    var dataLength = 20;
+    var updateChart = function (count) {
+        count = count || 1;
+        for (var j = 0; j < count; j++) {
+            yVal = yflow[xVal+xSet*20];
+            dps.push({
+                x: xVal,
+                y: yVal
+            });
+            xVal++;
+            if(xVal==21){xVal=0;xSet++;}
         }
-        
+        if (dps.length > dataLength) {
+            dps.shift();
+        }
+        chart.render();
+    };
+    updateChart(1);
+    setInterval(function(){updateChart()}, updateInterval);
+    }
     </script>
 
 </head>
@@ -115,11 +129,11 @@
 
 <p id="set">set 1</p>
 <p id="time">0초</p>
+<div id="chartContainer" style="height: 300px; width: 500px;"></div>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <p id="initial_rate">초기 환율: 1.1</p>
 <p id="rate"></p>
-<div id="graph">
-    <span >75%</span>
-</div>
+
 <p id="money">가진 돈: 1억원</p>
 
 

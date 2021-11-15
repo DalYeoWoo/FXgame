@@ -25,9 +25,25 @@ def participate(request):
     return redirect('polls:game', participant.id)
 
 @csrf_exempt
+def tip(request, participant_id):
+    participant = get_object_or_404(Participant, pk=participant_id)
+    content = {
+        'participant' : participant
+    }
+    return render(request, 'polls/tip.html', content)
+
+@csrf_exempt
+def create(request, participant_id):
+    participant = get_object_or_404(Participant, pk=participant_id)
+    if(request.method == 'POST'):
+        participant.tip = str(request.POST.get('tip', ''))
+        participant.save()
+    return redirect('polls:index')
+
+@csrf_exempt
 def submit(request, participant_id):
     participant = get_object_or_404(Participant, pk=participant_id)
     if(request.method == 'POST'):
         participant.history = str(request.POST.get('hist', ''))
         participant.save()
-    return redirect('polls:index')
+    return redirect(reverse('polls:tip',args=[participant_id]))

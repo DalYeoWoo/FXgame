@@ -23,7 +23,7 @@
     <br>자신만의 베팅 팁 등을 아래에 짧게 써주시면 감사드리겠습니다!
 </h1>>
 <form action="{% url 'polls:create' participant.id %}" method="post">
-    <input name='tip' style="height: 300px; width: 700px;"><br><br>
+    <textarea name="tip" rows="5" cols="30" style="width:300px;height: 500px;"></textarea> <br><br>
     <input type = "submit" value="제출하기">
 </form>
 

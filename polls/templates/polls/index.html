@@ -2,10 +2,11 @@
 
 <html>
 	<head>
+		{% load static %}
 		<title>FXGAME</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="{% static 'assets/css/main.css' %}" />
 	</head>
 	<body class="is-preload">
 
@@ -16,7 +17,7 @@
 
 					<!-- Logo -->
 						<div id="logo">
-							<span class="image avatar48"><img src="images/avatar.jpg" alt="" /></span>
+							<span class="image avatar"><img src="{% static 'images/avatar.jpg' %}" alt="" /></span>
 							<h1 id="title">과기글</h1>
 							<p>FXGAME Survey</p>
 						</div>
@@ -58,7 +59,7 @@
 							<header>
 								<h2 class="alt">안녕하세요! <strong>설문조사</strong>에 참여해주셔서 감사합니다.<br />
 								시작하기 앞서 <strong>아래 글</strong>을 반드시 읽어주세요.</h2>
-								<p>예상 소요 시간: 4분<br />
+								<p>예상 소요 시간: 5분<br />
 								아래 버튼을 눌러 참여해주세요!</p>
 							</header>
 
@@ -80,11 +81,11 @@
 								<h2>FXGAME?</h2>
 							</header>
 
-							<a href="#" class="image featured"><img src="images/pic08.jpg" alt="" /></a>
+							<a href="#" class="image featured"><img src="{% static 'images/pic08.jpg' %}" alt="" /></a>
 
 							<p>본 설문조사에서 진행하는 FXGAME은 20초 뒤에 초기 환율이 상승하는지 또는 하락하는지 맞추는 간단한 베팅 게임입니다.
-								20초씩 10개의 세트로 구성되어 있으며, 13초 이후부터는 상승/하락 버튼을 누를 수 없습니다.
-								초기 자금은 1억이며 맞추면 1.3배, 틀리면 0.8배가 됩니다. 아무 버튼을 누르지 않는다면 돈은 차감되지 않습니다.
+								20초씩 15개의 세트로 구성되어 있으며, 10초 이후부터는 상승/하락 버튼을 누를 수 없습니다.
+								맞추면 1점, 틀리면 0점을 획득하게 됩니다. 아무 버튼을 누르지 않으면 자동으로 0점을 획득하게 되니 주의해주세요.
 								행운을 빕니다 :)
 							</p>
 
@@ -106,13 +107,13 @@
 			</div>
 
 		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.scrolly.min.js"></script>
-			<script src="assets/js/jquery.scrollex.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+			<script src="{% static 'assets/js/jquery.min.js' %}"></script>
+			<script src="{% static 'assets/js/jquery.scrolly.min.js' %}"></script>
+			<script src="{% static 'assets/js/jquery.scrollex.min.js' %}"></script>
+			<script src="{% static 'assets/js/browser.min.js' %}"></script>
+			<script src="{% static 'assets/js/breakpoints.min.js' %}"></script>
+			<script src="{% static 'assets/js/util.js' %}"></script>
+			<script src="{% static 'assets/js/main.js' %}"></script>
 
 	</body>
 </html>
